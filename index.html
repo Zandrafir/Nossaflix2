@@ -243,7 +243,7 @@ html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-fam
 .btn-like-filme.liked{border-color:#46d369;background:rgba(70,211,105,.15)}
 
 /* MODAL DESBLOQUEIO */
-#unlock-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:300;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .5s;text-align:center;backdrop-filter:blur(12px)}
+#unlock-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:460;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .5s;text-align:center;backdrop-filter:blur(12px)}
 #unlock-modal-overlay.show{opacity:1;pointer-events:all}
 .unlock-modal{position:relative;padding:50px 40px;max-width:520px}
 .unlock-sparkles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
@@ -1117,8 +1117,11 @@ function closeCardVideo() {
   if (overlay) overlay.classList.remove('show');
   if (vid) { vid.pause(); vid.src = ''; }
   document.body.style.overflow = '';
+  // Se desbloqueou enquanto o vídeo estava aberto, mostrar agora
+  if (filmeUnlocked && !document.getElementById('unlock-modal-overlay').classList.contains('show')) {
+    setTimeout(function() { showUnlockModal(); }, 300);
+  }
 }
-
 // ════════════════════════════════════════════
 // NAVEGAÇÃO
 // ════════════════════════════════════════════
