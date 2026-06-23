@@ -902,7 +902,13 @@ function openModal(ref) {
   document.getElementById('modal-desc').textContent = item.desc;
   var wrap = document.getElementById('modal-img-wrap');
   if (item.video) {
-    // Modal de vídeo — abre o player diretamente
+    // Registrar como visto antes de abrir o player
+    var rowIdV = (typeof ref === 'object') ? ref.row : 'row-nosso';
+    var idxV = (typeof ref === 'object') ? ref.index : ref;
+    if (rowIdV !== 'row-embreve') {
+      var keyV = rowIdV + ':' + idxV;
+      if (!likedCards[keyV]) { likedCards[keyV] = true; updateProgress(); }
+    }
     closeModal();
     openCardVideo(item.video, item.title, item.desc);
     return;
